@@ -1,0 +1,97 @@
+public Transform lookAt;
+public float boundX= 0.15f;
+public fload boundY = 0.05f;
+
+private void LateUpdate()
+{
+	Vector3 delta = new Vector3.zero;
+	// This is to check if we are inside the bounds on the X axis
+	float deltaX = lookAt.position.x - transform.position.x;
+	if(deltaX > boundX || deltaX < -boundX)
+	{
+	if(transform.position.x < lookAt.position.x)
+	{
+	delta.x = deltaX - boundX;
+	}
+	delta.x = deltaX + boundX;
+	}
+
+	// This is to check if we are inside the bounds on the Y axis
+	float deltaY = lookAt.position.y - transform.position.y;
+	if(deltaY > boundY || deltaY < -boundY)
+	{
+	if(transform.position.y < lookAt.position.y)
+	{
+	delta.y = deltaY - boundY;
+	}
+	delta.y = deltaY + boundY;
+	}
+
+
+	transform.position += new Vector(delta.x,delta.y,0);  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Diğer obje için kodlar
+
+collidable 
+
+[RequireComponent()typeof()BoxCollider2D))]
+public class Collidable : MonoBehaviour
+{
+	public ConactFilter2D filter;
+	private BoxCollider2D boxCollider;
+	private Collider2D hits[] = new Collider2D[10];
+	
+
+	protected virtual void Start()
+	{
+	boxCollider = GetComponent<BoxCollider2D>();
+
+	}
+
+	protected virtual void Update()
+	{
+	boxCollider.OverlapCollider(filter,hits);
+	for(int i = 0 ; i< hits.Length; i++)
+
+	{
+		if(hits[i] == null)
+			continue;
+		Debug.Log(hits[i].name);
+		//The array is not cleaned up, so we do it ourself
+		hits[i] =nul;
+	}
+	
+	}
+
+}
+
+
+
+1:47:36
+https://www.youtube.com/watch?v=b8YUfee_pzc&list=PLI5KGtDrj4HVInyXdx5N2oYUAb9U7rJ4L&index=17
+
+
+
+
+
+
+
+
+
+ 

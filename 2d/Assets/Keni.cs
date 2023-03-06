@@ -47,6 +47,8 @@ public class Keni : MonoBehaviour
     public float speed = 5f; // oyuncunun hareket hızı
     private Rigidbody2D rb;
     public float jumpForce;
+    private Vector2 direction;
+    private bool isGrounded = false;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>(); // oyuncunun Rigidbody bileşenini al
@@ -56,9 +58,11 @@ public class Keni : MonoBehaviour
     {
         float move = Input.GetAxis("Horizontal"); // oyuncunun hareket yönü
         // Jump if on the ground and the jump button is pressed
-        if (Input.GetButtonDown("Jump"))
+        
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
-                rb.velocity = Vector2.up * jumpForce;     
+                rb.velocity = Vector2.up * jumpForce;
+                isGrounded=false;     
         }
          rb.velocity = new Vector2(move * speed, rb.velocity.y); // oyuncunun hareket yönüne ve hızına göre Rigidbody'yi hareket ettir
     
@@ -81,6 +85,10 @@ public class Keni : MonoBehaviour
         if (collision.gameObject.tag == "Wall") // oyuncu duvara çarptığında
         {
             rb.velocity = Vector2.zero; // oyuncunun hızını sıfırla
+        }
+        if(collision.gameObject.tag == "Zemin")
+        {
+            isGrounded = true;
         }
         
     }
